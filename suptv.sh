@@ -1,7 +1,7 @@
 
 echo " ✨✨✨✨SUPTV ✨✨✨✨"
 echo " ✨✨✨✨OPENPLI9.X & 8.X ✨✨✨✨"
-echo " ✨✨✨✨OPENPLI9.X & 8.X ✨✨✨✨"
+
 wait
 wait
 wait
@@ -19,9 +19,15 @@ opkg update && opkg install --force-overwrite /tmp/*.ipk
 
 wait
 
+if [ $? -eq 0 ]; then
+    echo "🎉 التثبيت تم بنجاح! الحزمة جاهزة للاستخدام. 🚀"
+else
+    echo "❌ حدث خطأ أثناء التثبيت! يرجى المحاولة مرة أخرى. 😔"
+fi
+
 rm -r /tmp/*.ipk
 
-
+echo " ✨✨✨✨OPENPLI9.X & 8.X ✨✨✨✨"
 
 exit 0
 
