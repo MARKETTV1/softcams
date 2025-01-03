@@ -9,4 +9,20 @@ wget -O /tmp/enigma2-plugin-extensions-suptv_4.1_all.ipk https://github.com/MARK
 opkg install /tmp/enigma2-plugin-extensions-suptv_4.1_all.ipk
 
 # Optionnel: Redémarrer Enigma2 ou recharger le service
-reboot
+echo ""
+echo ""
+echo ""
+echo "#########################################################"
+echo "#           echo ""
+echo ""
+echo "#########################################################"
+echo "#       SUPTV [OPENPL] INSTALLED SUCCESSFULLY          #"
+echo "#                 KARIM & SAID MABROUR SOBHI            #"              
+echo "#                     support                           #"
+echo "#                                                       #"
+echo "#########################################################"
+echo "#           your Device will RESTART Now                #"
+echo "#########################################################"
+sleep 3
+killall -9 enigma2
+exit 0
