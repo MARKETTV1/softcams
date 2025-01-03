@@ -15,7 +15,8 @@ if [ $? -eq 0 ]; then
 else
     echo "❌ An error occurred during installation! Please try again. 😔"
 fi
-reboot
+init 4
+init 3
 echo " ✨✨✨✨SUPTV ✨✨✨✨"
 
 
