@@ -16,9 +16,10 @@ if [ $? -eq 0 ]; then
 else
     echo "❌ An error occurred during installation! Please try again. 😔"
 fi
-rm -r /tmp/*.ipk
-echo " ✨✨✨✨SUPTV ✨✨✨✨"
 init 4
 init 3
+
+echo " ✨✨✨✨SUPTV ✨✨✨✨"
+
 
 
