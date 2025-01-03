@@ -20,9 +20,9 @@ opkg update && opkg install --force-overwrite /tmp/*.ipk
 wait
 
 if [ $? -eq 0 ]; then
-    echo "🎉 التثبيت تم بنجاح! الحزمة جاهزة للاستخدام. 🚀"
+   echo "🎉 Installation was successful! The package is ready for use. 🚀"
 else
-    echo "❌ حدث خطأ أثناء التثبيت! يرجى المحاولة مرة أخرى. 😔"
+    echo "❌ An error occurred during installation! Please try again. 😔"
 fi
 
 rm -r /tmp/*.ipk
