@@ -9,13 +9,19 @@ IPK_URL="https://github.com/MARKETTV1/softcams/raw/refs/heads/main/enigma2-plugi
 # اسم الحزمة
 IPK_FILE="$TEMP_DIR/enigma2-plugin-extensions-suptv_4.1_all.ipk"
 
-# تنزيل الحزمة
+# التأكد من وجود المجلد /tmp
+if [ ! -d "$TEMP_DIR" ]; then
+    echo "Temporary directory $TEMP_DIR not found. Exiting."
+    exit 1
+fi
+
+# تنزيل الحزمة باستخدام wget مع بعض الخيارات
 echo "Downloading the IPK package..."
-wget -O "$IPK_FILE" "$IPK_URL"
+wget --quiet --show-progress --tries=3 -O "$IPK_FILE" "$IPK_URL"
 
 # التحقق من نجاح التحميل
 if [ ! -f "$IPK_FILE" ]; then
-    echo "Download failed! Exiting."
+    echo "Download failed! File not found at $IPK_FILE."
     exit 1
 fi
 
