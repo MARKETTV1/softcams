@@ -1,11 +1,13 @@
-echo "Hello, TEAM!";
+#!/bin/sh
 
+# Téléchargement du fichier .ipk depuis GitHub
 wget -O /tmp/enigma2-plugin-extensions-suptv_4.1_all.ipk https://github.com/MARKETTV1/softcams/raw/refs/heads/main/enigma2-plugin-extensions-suptv_4.1_all.ipk
-echo "Loading the plugin";
-echo "Loading the plugin";
-echo "Loading the plugin";
-https://github.com/MARKETTV1/softcams/raw/refs/heads/main/enigma2-plugin-extensions-suptv_4.1_all.ipk
-echo "Please wait a moment";
-wait
-opkg install /tmp/*.ipk
-init 4; sleep 4; init 3
+
+# Installation du fichier .ipk
+opkg install /tmp/enigma2-plugin-extensions-suptv_4.1_all.ipk
+
+# Nettoyage (supprimer le fichier après installation)
+rm /tmp/mon_paquet.ipk
+
+# Optionnel: Redémarrer Enigma2 ou recharger le service
+reboot
