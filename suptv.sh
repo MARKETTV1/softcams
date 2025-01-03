@@ -10,10 +10,10 @@ opkg install /tmp/enigma2-plugin-extensions-suptv_4.1_all.ipk
 
 # التحقق من التثبيت
 if [ $? -eq 0 ]; then
-    echo "The installation was successful🚀"
+    echo "The installation was successful. "
     
 else
-    echo "There was an error during the installation😔"
+    echo "There was an error during the installation. "
 fi
 
 # تنظيف الملفات المؤقتة
