@@ -1,22 +1,18 @@
-#!/bin/bash
+rm -r /usr/lib/enigma2/python/Plugins/Extensions/suptv
 
-# تحميل الحزمة باستخدام wget
-echo "Downloading the package..."
+wait
+
 wget -O /tmp/enigma2-plugin-extensions-suptv_4.1_all.ipk "https://github.com/MARKETTV1/softcams/raw/refs/heads/main/enigma2-plugin-extensions-suptv_4.1_all.ipk"
 
-# بدء التثبيت
-echo "Installation is in progress..."
-opkg install /tmp/enigma2-plugin-extensions-suptv_4.1_all.ipk
+wait
 
-# التحقق من التثبيت
-if [ $? -eq 0 ]; then
-    echo "The installation was successful. "
-    
-else
-    echo "There was an error during the installation. "
-fi
+opkg update && opkg install --force-overwrite /tmp/*.ipk
 
-# تنظيف الملفات المؤقتة
-rm -f /tmp/enigma2-plugin-extensions-suptv_4.1_all.ipk
+wait
 
-  
+rm -r /tmp/*.ipk
+
+
+
+exit 0
+
