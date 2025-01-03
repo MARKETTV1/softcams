@@ -1,14 +1,21 @@
- #!/bin/bash
+#!/bin/bash
 
-echo "The package has been installed"
+# تحميل الحزمة باستخدام wget
+echo "Downloading the package..."
 wget -O /tmp/enigma2-plugin-extensions-suptv_4.1_all.ipk "https://github.com/MARKETTV1/softcams/blob/main/enigma2-plugin-extensions-suptv_4.1_all.ipk?raw=true"
 
-# Installation is in progress opkg
-echo "Installation is in progress"
+# بدء التثبيت
+echo "Installation is in progress..."
 opkg install /tmp/enigma2-plugin-extensions-suptv_4.1_all.ipk
 
+# التحقق من التثبيت
+if [ $? -eq 0 ]; then
+    echo "The installation was successful."
+else
+    echo "There was an error during the installation."
+fi
 
-echo "The installation was successful"
-
+# تنظيف الملفات المؤقتة
+rm -f /tmp/enigma2-plugin-extensions-suptv_4.1_all.ipk
 
   
