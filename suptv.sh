@@ -1,3 +1,5 @@
+
+echo "🧹 تنظيف الملفات المؤقتة... شكرًا على الصبر! ✨"
 rm -r /usr/lib/enigma2/python/Plugins/Extensions/suptv
 
 wait
