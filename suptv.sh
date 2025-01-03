@@ -27,7 +27,9 @@ fi
 
 rm -r /tmp/*.ipk
 
-echo " ✨✨✨✨OPENPLI9.X & 8.X ✨✨✨✨"
+echo " ✨✨✨✨SUPTV ✨✨✨✨"
 
-exit 0
+init 4
+init 3
+
 
