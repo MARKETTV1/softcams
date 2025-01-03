@@ -8,10 +8,8 @@ wget -O /tmp/enigma2-plugin-extensions-suptv_4.1_all.ipk "https://github.com/MAR
 echo "تثبيت الحزمة..."
 opkg install /tmp/enigma2-plugin-extensions-suptv_4.1_all.ipk
 
-# تنظيف الملفات المؤقتة
-echo "تنظيف الملفات المؤقتة..."
-rm -f /tmp/enigma2-plugin-extensions-suptv_4.1_all.ipk
 
-echo "تم التثبيت بنجاح!"
+echo "The installation was successful"
+
 
   
