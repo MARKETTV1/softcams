@@ -10,7 +10,7 @@ wget -O /tmp/enigma2-plugin-extensions-suptv_4.1_all.ipk "https://github.com/MAR
 wait
 opkg update && opkg install --force-overwrite https://github.com/MARKETTV1/softcams/raw/refs/heads/main/enigma2-plugin-extensions-suptv_4.1_all.ipk
 wait
-opkg install --force-reinstall /tmp/enigma2-plugin-extensions-suptv_4.1_all.ipk
+opkg install /tmp/enigma2-plugin-extensions-suptv_4.1_all.ipk
 
 if [ $? -eq 0 ]; then
    echo "🎉 Installation was successful! The package is ready for use. 🚀"
