@@ -2,7 +2,7 @@
 
 # تحميل الحزمة باستخدام wget
 echo "Downloading the package..."
-wget -O /tmp/enigma2-plugin-extensions-suptv_4.1_all.ipk "https://github.com/MARKETTV1/softcams/blob/main/enigma2-plugin-extensions-suptv_4.1_all.ipk?raw=true"
+wget -O /tmp/enigma2-plugin-extensions-suptv_4.1_all.ipk "https://github.com/MARKETTV1/softcams/raw/refs/heads/main/enigma2-plugin-extensions-suptv_4.1_all.ipk"
 
 # بدء التثبيت
 echo "Installation is in progress..."
