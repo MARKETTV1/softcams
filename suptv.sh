@@ -1,5 +1,12 @@
 
-echo "🧹 تنظيف الملفات المؤقتة... شكرًا على الصبر! ✨"
+echo " ✨✨✨✨SUPTV ✨✨✨✨"
+echo " ✨✨✨✨OPENPLI9.X & 8.X ✨✨✨✨"
+echo " ✨✨✨✨OPENPLI9.X & 8.X ✨✨✨✨"
+wait
+wait
+wait
+wait
+
 rm -r /usr/lib/enigma2/python/Plugins/Extensions/suptv
 
 wait
