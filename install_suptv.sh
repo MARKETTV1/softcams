@@ -9,4 +9,5 @@ wget -O /tmp/enigma2-plugin-extensions-suptv_4.1_all.ipk https://github.com/MARK
 opkg install /tmp/enigma2-plugin-extensions-suptv_4.1_all.ipk
 
 # Optionnel: Redémarrer Enigma2 ou recharger le service
-init 4 && init 3
+init 4
+init 3
