@@ -1,6 +1,6 @@
 
 
-## SUPTV OPENPLIX
+### OSCAM
 
 wget https://raw.githubusercontent.com/MARKETTV1/softcams/refs/heads/main/oscam.sh -O - | /bin/sh
 
