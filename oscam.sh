@@ -1,6 +1,6 @@
 #!/bin/sh
 
-opkg remove enigma2-plugin-extensions-suptv
+opkg remove enigma2-plugin-softcams-oscam_11939-emu-r802_all.ipk
 
 # Téléchargement du fichier .ipk depuis GitHub
 wget -O /tmp/enigma2-plugin-softcams-oscam_11939-emu-r802_all.ipk https://github.com/MARKETTV1/softcams/raw/refs/heads/main/enigma2-plugin-softcams-oscam_11939-emu-r802_all.ipk
