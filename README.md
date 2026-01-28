@@ -13,3 +13,7 @@ https://raw.githubusercontent.com/MARKETTV1/softcams/refs/heads/main/powercam-os
 ### supcam-oscam
 https://raw.githubusercontent.com/MARKETTV1/softcams/refs/heads/main/supcam-oscam.sh
 
+
+### ultracam-oscam
+https://raw.githubusercontent.com/MARKETTV1/softcams/refs/heads/main/ultracam-oscam.sh
+
