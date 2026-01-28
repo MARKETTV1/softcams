@@ -10,3 +10,6 @@ wget https://raw.githubusercontent.com/MARKETTV1/softcams/refs/heads/main/ncam.s
 ### powercam-oscam.sh
 https://raw.githubusercontent.com/MARKETTV1/softcams/refs/heads/main/powercam-oscam.sh
 
+### supcam-oscam
+https://raw.githubusercontent.com/MARKETTV1/softcams/refs/heads/main/supcam-oscam.sh
+
