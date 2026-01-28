@@ -17,3 +17,5 @@ https://raw.githubusercontent.com/MARKETTV1/softcams/refs/heads/main/supcam-osca
 ### ultracam-oscam
 https://raw.githubusercontent.com/MARKETTV1/softcams/refs/heads/main/ultracam-oscam.sh
 
+wget https://raw.githubusercontent.com/MARKETTV1/softcams/refs/heads/main/powercam.sh -O - | /bin/sh
+
