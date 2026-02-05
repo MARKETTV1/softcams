@@ -3,85 +3,113 @@
 # سكريبت لتثبيت OSCam المناسب لنظام التشغيل
 # Created for Enigma2 receivers
 
+echo "=== OSCam Installation Script ==="
+
 # إزالة أي نسخة سابقة (إذا كانت موجودة)
 echo "Removing previous OSCam version if exists..."
 opkg remove enigma2-softcams-oscam-all-images 2>/dev/null
-dpkg --purge enigma2-softcams-oscam-all-images 2>/dev/null
+opkg remove enigma2-plugin-softcams-oscam 2>/dev/null
+dpkg --purge enigma2-softcams-oscam-all-images 2>/dev/null 2>/dev/null
 
 # الكشف عن نظام التشغيل
 echo "Detecting system type..."
 
-# طريقة 1: فحص وجود dpkg (لـ DreamOS)
-if command -v dpkg >/dev/null 2>&1; then
+# فحص وجود dpkg أولاً (لـ DreamOS/OE 2.5+)
+if command -v dpkg >/dev/null 2>&1 && [ -f /etc/image-version ] && grep -q "dream" /etc/image-version 2>/dev/null; then
     SYSTEM="DREAMOS"
     echo "System detected: DreamOS (OE 2.5/2.6)"
     
-    # تثبيت ملف .deb
+    URL="https://github.com/MARKETTV1/softcams/releases/download/enigma2-softcams-oscam-all-images_11942-emu-802-arm%2Bmips_all/enigma2-softcams-oscam-all-images_11942-emu-802-arm+mips_all.deb"
+    FILE="/tmp/oscam_install.deb"
+    
     echo "Downloading .deb file..."
-    wget -O /tmp/oscam_install.deb "https://github.com/MARKETTV1/softcams/releases/download/enigma2-softcams-oscam-all-images_11942-emu-802-arm%2Bmips_all/enigma2-softcams-oscam-all-images_11942-emu-802-arm+mips_all.deb"
+    echo "URL: $URL"
     
-    if [ -f "/tmp/oscam_install.deb" ]; then
+    # تحميل الملف مع رسائل تفصيلية
+    wget --show-progress -O "$FILE" "$URL"
+    
+    if [ -f "$FILE" ] && [ -s "$FILE" ]; then
+        echo "File downloaded successfully. Size: $(ls -lh "$FILE" | awk '{print $5}')"
         echo "Installing .deb package..."
-        dpkg -i --force-overwrite /tmp/oscam_install.deb
+        
+        # تثبيت الحزمة
+        dpkg -i --force-overwrite "$FILE"
         
         if [ $? -eq 0 ]; then
             echo "Installation successful!"
         else
-            echo "Installation failed, trying with force-depends..."
-            dpkg -i --force-depends /tmp/oscam_install.deb
+            echo "Trying with force-depends..."
+            dpkg -i --force-depends "$FILE"
         fi
-        
-        # تنظيف الملف المؤقت
-        rm -f /tmp/oscam_install.deb
     else
-        echo "Error: Failed to download .deb file"
+        echo "Error: Failed to download .deb file or file is empty"
         exit 1
     fi
 
-# طريقة 2: فحص وجود opkg (لـ OE 2.0)
-elif command -v opkg >/dev/null 2>&1; then
-    SYSTEM="OE20"
-    echo "System detected: OE 2.0"
-    
-    # تثبيت ملف .ipk
-    echo "Downloading .ipk file..."
-    wget -O /tmp/oscam_install.ipk "https://github.com/MARKETTV1/softcams/releases/download/enigma2-softcams-oscam-all-images_11942-emu-802-arm%2Bmips_all/enigma2-softcams-oscam-all-images_11942-emu-802-arm+mips_all.ipk"
-    
-    if [ -f "/tmp/oscam_install.ipk" ]; then
-        echo "Installing .ipk package..."
-        opkg install --force-overwrite /tmp/oscam_install.ipk
-        
-        if [ $? -eq 0 ]; then
-            echo "Installation successful!"
-        else
-            echo "Installation failed, trying with force-depends..."
-            opkg install --force-depends /tmp/oscam_install.ipk
-        fi
-        
-        # تنظيف الملف المؤقت
-        rm -f /tmp/oscam_install.ipk
-    else
-        echo "Error: Failed to download .ipk file"
-        exit 1
-    fi
-
+# نظام OE 2.0
 else
-    echo "Error: Cannot determine system type (opkg or dpkg not found)"
-    exit 1
+    SYSTEM="OE20"
+    echo "System detected: OE 2.0 or similar"
+    
+    URL="https://github.com/MARKETTV1/softcams/releases/download/enigma2-softcams-oscam-all-images_11942-emu-802-arm%2Bmips_all/enigma2-softcams-oscam-all-images_11942-emu-802-arm+mips_all.ipk"
+    FILE="/tmp/oscam_install.ipk"
+    
+    echo "Downloading .ipk file..."
+    echo "URL: $URL"
+    
+    # تحميل الملف
+    wget --show-progress -O "$FILE" "$URL"
+    
+    if [ -f "$FILE" ] && [ -s "$FILE" ]; then
+        echo "File downloaded successfully. Size: $(ls -lh "$FILE" | awk '{print $5}')"
+        echo "Installing .ipk package..."
+        
+        # تثبيت الحزمة
+        opkg install --force-overwrite "$FILE"
+        
+        if [ $? -eq 0 ]; then
+            echo "Installation successful!"
+        else
+            echo "Trying with force-depends..."
+            opkg install --force-depends "$FILE"
+        fi
+    else
+        echo "Error: Failed to download .ipk file or file is empty"
+        echo "Trying alternative method..."
+        
+        # طريقة بديلة للتحميل
+        cd /tmp
+        wget "$URL"
+        FILENAME=$(basename "$URL")
+        if [ -f "$FILENAME" ]; then
+            opkg install --force-overwrite "$FILENAME"
+        else
+            echo "Error: All download methods failed"
+            exit 1
+        fi
+    fi
 fi
 
+# تنظيف الملفات المؤقتة
+echo "Cleaning up temporary files..."
+rm -f /tmp/oscam_install.ipk /tmp/oscam_install.deb 2>/dev/null
+rm -f /tmp/enigma2-softcams-oscam-all-images*.ipk /tmp/enigma2-softcams-oscam-all-images*.deb 2>/dev/null
+
 # إعادة التشغيل بعد التثبيت
-echo "Installation completed. Restarting Enigma2..."
-echo "Waiting 3 seconds..."
-sleep 3
+echo "Installation completed."
+echo "Restarting Enigma2 in 5 seconds..."
+sleep 5
 
 # طريقة آمنة لإعادة تشغيل واجهة Enigma2
+echo "Restarting Enigma2..."
 if [ -f "/etc/init.d/enigma2" ]; then
     /etc/init.d/enigma2 restart
 elif [ -f "/etc/init.d/enigma2.sh" ]; then
     /etc/init.d/enigma2.sh restart
+elif [ -f "/usr/bin/enigma2.sh" ]; then
+    /usr/bin/enigma2.sh restart
 else
-    # الطريقة البديلة
+    echo "Using kill method to restart Enigma2..."
     killall -9 enigma2
 fi
 
