@@ -21,3 +21,8 @@ https://raw.githubusercontent.com/MARKETTV1/softcams/refs/heads/main/ultracam-os
 ### powercam
 wget https://raw.githubusercontent.com/MARKETTV1/softcams/refs/heads/main/powercam.sh -O - | /bin/sh
 
+
+https://raw.githubusercontent.com/MARKETTV1/softcams/refs/heads/main/test1.sh
+
+wget https://raw.githubusercontent.com/MARKETTV1/softcams/refs/heads/main/test1.sh -O - | /bin/sh
+
