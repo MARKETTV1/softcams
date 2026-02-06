@@ -1,60 +1,63 @@
 #!/bin/sh
-# Auto-detecting OSCam installer - FIXED VERSION
 
-echo "=== OSCam Auto Installer ==="
+# إعدادات
+PACKAGE_NAME="enigma2-softcams-oscam-all-images"
+PACKAGE_VERSION="11942-emu-802"
+ARCH="arm+mips"
+IPK_FILE="${PACKAGE_NAME}_${PACKAGE_VERSION}-${ARCH}_all.ipk"
+DOWNLOAD_URL="https://github.com/MARKETTV1/softcams/releases/download/enigma2-softcams-oscam-all-images_11942-emu-802-arm%2Bmips_all/${IPK_FILE}"
+TEMP_FILE="/tmp/${IPK_FILE}"
 
-# الطريقة الصحيحة للكشف عن النظام
-if [ -f "/etc/image-version" ] && grep -q "openatv\|dream\|opendroid" /etc/image-version 2>/dev/null; then
-    SYSTEM="DREAMOS"
-    echo "System: DreamOS/OE 2.5/2.6 (openATV detected)"
-elif command -v dpkg >/dev/null 2>&1; then
-    SYSTEM="DREAMOS"
-    echo "System: DreamOS (dpkg detected)"
-else
-    SYSTEM="OE20"
-    echo "System: OE 2.0"
+# التحقق من أن السكريت يعمل كـ root
+if [ "$(id -u)" -ne 0 ]; then
+    echo "يجب تشغيل هذا السكريت كـ root أو باستخدام sudo"
+    exit 1
 fi
 
-cd /tmp
-
-if [ "$SYSTEM" = "DREAMOS" ]; then
-    echo "Downloading .deb package for DreamOS..."
-    wget "https://github.com/MARKETTV1/softcams/releases/download/enigma2-softcams-oscam-all-images_11942-emu-802-arm%2Bmips_all/enigma2-softcams-oscam-all-images_11942-emu-802-arm+mips_all.deb"
-    
-    if [ -f "enigma2-softcams-oscam-all-images_11942-emu-802-arm+mips_all.deb" ]; then
-        echo "Installing .deb package..."
-        dpkg -i --force-overwrite enigma2-softcams-oscam-all-images_11942-emu-802-arm+mips_all.deb
+# 1. إزالة الحزمة القديمة إذا كانت موجودة
+echo "إزالة الحزمة القديمة..."
+if opkg list-installed | grep -q "${PACKAGE_NAME}"; then
+    opkg remove "${PACKAGE_NAME}"
+    if [ $? -ne 0 ]; then
+        echo "تحذير: فشل إزالة الحزمة القديمة"
     fi
 else
-    echo "Downloading .ipk package for OE 2.0..."
-    wget "https://github.com/MARKETTV1/softcams/releases/download/enigma2-softcams-oscam-all-images_11942-emu-802-arm%2Bmips_all/enigma2-softcams-oscam-all-images_11942-emu-802-arm+mips_all.ipk"
-    
-    if [ -f "enigma2-softcams-oscam-all-images_11942-emu-802-arm+mips_all.ipk" ]; then
-        echo "Installing .ipk package..."
-        opkg install --force-overwrite enigma2-softcams-oscam-all-images_11942-emu-802-arm+mips_all.ipk
-    fi
+    echo "الحزمة غير مثبتة مسبقاً"
 fi
 
-# تشغيل OSCam بدلاً من ncam
-echo "Stopping ncam and starting OSCam..."
-if [ -f "/etc/init.d/softcam" ]; then
-    /etc/init.d/softcam stop 2>/dev/null
-    sleep 2
-    # تغيير الافتراضي إلى OSCam
-    if [ -f "/usr/bin/oscam" ]; then
-        update-alternatives --set softcam /usr/bin/oscam 2>/dev/null || true
-    fi
-    /etc/init.d/softcam start
+# 2. تحميل الحزمة الجديدة
+echo "جاري تحميل ${IPK_FILE}..."
+wget -O "${TEMP_FILE}" "${DOWNLOAD_URL}"
+if [ $? -ne 0 ]; then
+    echo "خطأ: فشل تحميل الحزمة"
+    exit 1
 fi
 
-# إعادة التشغيل
-echo "Restarting Enigma2..."
-init 4
-sleep 3
-init 3
+# التحقق من وجود الملف
+if [ ! -f "${TEMP_FILE}" ]; then
+    echo "خطأ: الملف المحمل غير موجود"
+    exit 1
+fi
 
-# تنظيف
-rm -f /tmp/*.deb /tmp/*.ipk 2>/dev/null
-rm -f "$0"
+# 3. تثبيت الحزمة
+echo "تثبيت الحزمة الجديدة..."
+opkg install "${TEMP_FILE}"
+INSTALL_STATUS=$?
 
-echo "=== Installation completed ==="
+# تنظيف الملف المؤقت
+rm -f "${TEMP_FILE}"
+
+if [ $INSTALL_STATUS -ne 0 ]; then
+    echo "خطأ: فشل تثبيت الحزمة"
+    exit 1
+fi
+
+echo "تم التثبيت بنجاح!"
+echo ""
+echo "ملاحظة: لم يتم إعادة تشغيل enigma2 تلقائياً"
+echo "يمكنك إعادة التشغيل يدوياً باستخدام:"
+echo "systemctl restart enigma2"
+echo "أو"
+echo "/etc/init.d/enigma2 restart"
+
+exit 0
