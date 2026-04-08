@@ -1,14 +1,92 @@
 #!/bin/sh
 
-opkg remove enigma2-softcams-oscam-all-images_11942-emu-802-arm+mips_all.ipk
+# ==============================================
+# SCRIPT : DOWNLOAD AND INSTALL Oscam_EMU #
+# ==============================================
+# Command: wget [رابط السكريبت] -O - | /bin/sh #
+# ==============================================
 
-# Téléchargement du fichier .ipk depuis GitHub
-wget -O /tmp/enigma2-softcams-oscam-all-images_11942-emu-802-arm+mips_all.ipk https://github.com/MARKETTV1/softcams/releases/download/enigma2-softcams-oscam-all-images_11942-emu-802-arm%2Bmips_all/enigma2-softcams-oscam-all-images_11942-emu-802-arm+mips_all.ipk
+########################################################################################################################
+# Plugin	... Enter Manually
+########################################################################################################################
 
-# Installation du fichier .ipk
-opkg install /tmp/enigma2-softcams-oscam-all-images_11942-emu-802-arm+mips_all.ipk
+MY_IPK="enigma2-softcams-oscam-all-images_11942-emu-802-arm+mips_all.ipk"
+MY_DEB="enigma2-softcams-oscam-all-images_11942-emu-802-arm+mips_all.deb"
 
-# Optionnel: Redémarrer Enigma2 ou recharger le service
-sleep 3
-killall -9 enigma2
-exit 0
+########################################################################################################################
+# Auto ... Do not change
+########################################################################################################################
+
+# Decide : which package ?
+MY_MAIN_URL="https://github.com/MARKETTV1/softcams/releases/download/enigma2-softcams-oscam-all-images_11942-emu-802-arm%2Bmips_all/"
+if which dpkg > /dev/null 2>&1; then
+	MY_FILE=$MY_DEB
+	MY_URL=$MY_MAIN_URL$MY_DEB
+else
+	MY_FILE=$MY_IPK
+	MY_URL=$MY_MAIN_URL$MY_IPK
+fi
+MY_TMP_FILE="/tmp/"$MY_FILE
+
+echo ''
+echo '************************************************************'
+echo '**                         STARTED                        **'
+echo '************************************************************'
+echo '**                   Oscam_EMU Installer                  **'
+echo '************************************************************'
+echo ''
+
+# Remove previous file (if any)
+rm -f $MY_TMP_FILE > /dev/null 2>&1
+
+# Download package file
+MY_SEP='============================================================='
+echo $MY_SEP
+echo 'Downloading '$MY_FILE' ...'
+echo $MY_SEP
+echo ''
+wget -T 2 $MY_URL -P "/tmp/"
+
+# Check download
+if [ -f $MY_TMP_FILE ]; then
+	# Install
+	echo ''
+	echo $MY_SEP
+	echo 'Installation started'
+	echo $MY_SEP
+	echo ''
+	if which dpkg > /dev/null 2>&1; then
+		dpkg -i --force-overwrite $MY_TMP_FILE
+	else
+		opkg install --force-reinstall $MY_TMP_FILE
+	fi
+	MY_RESULT=$?
+
+	# Result
+	echo ''
+	echo ''
+	if [ $MY_RESULT -eq 0 ]; then
+		echo "   >>>>   SUCCESSFULLY INSTALLED   <<<<"
+		echo ''
+		echo "   >>>>         RESTARTING         <<<<"
+		if which systemctl > /dev/null 2>&1; then
+			sleep 2; systemctl restart enigma2
+		else
+			init 4; sleep 4; init 3;
+		fi
+	else
+		echo "   >>>>   INSTALLATION FAILED !   <<<<"
+	fi;
+	echo ''
+	echo '**************************************************'
+	echo '**                   FINISHED                   **'
+	echo '**************************************************'
+	echo ''
+	exit 0
+else
+	echo ''
+	echo "Download failed !"
+	exit 1
+fi
+
+# ------------------------------------------------------------------------------------------------------------
