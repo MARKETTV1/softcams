@@ -1,28 +1,27 @@
 #!/bin/sh
 
 # ==============================================
-# SCRIPT : DOWNLOAD AND INSTALL Oscam_EMU 11945
+# SCRIPT : DOWNLOAD AND INSTALL Oscam_EMU Levi45
 # ==============================================
-# روابط التحميل من GitHub
-# https://github.com/MARKETTV1/softcams
+# الإصدار: 11946-803
 # ==============================================
 
 ########################################################################################################################
-# Plugin - Oscam_EMU 11945-emu-802
+# Plugin - Oscam_EMU Levi45 11946-803
 ########################################################################################################################
 
-MY_IPK="enigma2-softcams-oscam-all-images_11945-emu-802-arm+mips_all.ipk"
-MY_DEB="enigma2-softcams-oscam-all-images_11945-emu-802-arm+mips_all.deb"
+MY_IPK="enigma2-plugin-softcams-oscam-emu-levi45_11946-803_all.ipk"
+MY_DEB="enigma2-plugin-softcams-oscam-emu-levi45_11946-803_all.deb"
 
 ########################################################################################################################
-# روابط التحميل المباشرة
+# روابط التحميل المباشرة من GitHub
 ########################################################################################################################
 
-IPK_URL="https://github.com/MARKETTV1/softcams/raw/refs/heads/main/enigma2-softcams-oscam-all-images_11945-emu-802-arm+mips_all.ipk"
-DEB_URL="https://github.com/MARKETTV1/softcams/raw/refs/heads/main/enigma2-softcams-oscam-all-images_11945-emu-802-arm+mips_all.deb"
+IPK_URL="https://github.com/MARKETTV1/softcams/raw/refs/heads/main/enigma2-plugin-softcams-oscam-emu-levi45_11946-803_all.ipk"
+DEB_URL="https://github.com/MARKETTV1/softcams/raw/refs/heads/main/enigma2-plugin-softcams-oscam-emu-levi45_11946-803_all.deb"
 
 ########################################################################################################################
-# Auto ... لا تغير شيء
+# Auto ... لا تغير شيء بعد هذا السطر
 ########################################################################################################################
 
 # تحديد الحزمة المناسبة حسب النظام
@@ -40,7 +39,7 @@ echo ''
 echo '************************************************************'
 echo '**                         STARTED                        **'
 echo '************************************************************'
-echo "**            Oscam_EMU 11945-emu-802                     **"
+echo "**        Oscam_EMU Levi45 11946-803                      **"
 echo "**            Source: MARKETTV1 / softcams                **"
 echo "************************************************************"
 echo ''
